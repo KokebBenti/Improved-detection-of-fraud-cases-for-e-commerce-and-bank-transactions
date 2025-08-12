@@ -1,3 +1,13 @@
+def duplicate_check(df):
+ import pandas as pd
+ df=df.drop_duplicates()
+ return df
+
+def change_type(df,col):
+ import pandas as pd
+ df[col]=pd.to_datetime(df[col])
+ return df   
+ 
 def plot_numerical(df,col):
  import matplotlib.pyplot as plt
  df[col].hist(bins=50, figsize=(8,6))
