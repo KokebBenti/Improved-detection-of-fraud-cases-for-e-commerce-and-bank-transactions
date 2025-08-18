@@ -72,5 +72,34 @@ def split_data(df):
    y = df['class']  
    xtrain, xtest,ytrain, ytest = train_test_split(X,y,test_size=0.2,random_state=42,stratify=y)
    return xtrain, xtest,ytrain,ytest
+
+
+
+def encode_fun(df,test,cols):
+ import pandas as pd 
+ from sklearn.preprocessing import OneHotEncoder
+ encoder = OneHotEncoder(handle_unknown='ignore', sparse_output=False)
+ encoder.fit(df[cols])
+ train_encoded_cols = pd.DataFrame(encoder.transform(df[cols]),columns=encoder.get_feature_names_out(cols),index=df.index)
+ test_encoded_cols = pd.DataFrame(encoder.transform(test[cols]),columns=encoder.get_feature_names_out(cols),index=test.index)
+ train_df = df.drop(columns=cols)
+ test_df = test.drop(columns=cols)
+ train_encoded = pd.concat([train_df, train_encoded_cols], axis=1)
+ test_encoded = pd.concat([test_df, test_encoded_cols], axis=1)
+ return train_encoded, test_encoded
+
+
+def scale_data(df):
+ from sklearn.preprocessing import StandardScaler
+ scaler = StandardScaler()
+ X_train_scaled = scaler.fit_transform(X_train)
+ X_test_scaled = scaler.transform(X_test)
+ return  X_train_scaled,  X_test_scaled
+ 
+
+
+
+
+
  
  
