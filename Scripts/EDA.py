@@ -48,3 +48,29 @@ def remove_outliers(df,col):
 def to_int(df,col):
  df[col] = df[col].astype(int)  
  return df
+
+
+def create_features(group):
+    group = group.sort_values('purchase_time')
+
+    # Transaction frequency
+    group['txn_count_1min'] = group.rolling('1min', on='purchase_time')['purchase_time'].count() - 1
+    group['txn_count_10min'] = group.rolling('10min', on='purchase_time')['purchase_time'].count() - 1
+    group['txn_count_1h'] = group.rolling('1h', on='purchase_time')['purchase_time'].count() - 1
+
+    # Transaction velocity
+    group['amount_sum_1min'] = group.rolling('1min', on='purchase_time')['purchase_value'].sum() - group['purchase_value']
+    group['amount_sum_10min'] = group.rolling('10min', on='purchase_time')['purchase_value'].sum() - group['purchase_value']
+    group['amount_sum_1h'] = group.rolling('1h', on='purchase_time')['purchase_value'].sum() - group['purchase_value']
+
+    return group
+
+
+def split_data(df):
+   from sklearn.model_selection import train_test_split
+   X = df.drop(columns=['class'])  
+   y = df['class']  
+   xtrain, xtest,ytrain, ytest = train_test_split(X,y,test_size=0.2,random_state=42,stratify=y)
+   return xtrain, xtest,ytrain,ytest
+ 
+ 
