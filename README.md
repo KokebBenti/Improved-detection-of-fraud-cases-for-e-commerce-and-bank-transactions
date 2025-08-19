@@ -22,7 +22,7 @@ After initial preparation of the data, we conduct exploratory data analysis to g
  
 Figure: Distribution of different types of browsers in the ecommerce dataset.
 
-**Handling class imbalance** 
+**Handling class imbalance**   
 One specific behavior of the fraudulent data set is how imbalanced it is. It is not uncommon to have only a very small amount of the transaction data be fraudulent causing our data to have an imbalance. We can see this from the distribution of legitimate/fraudulent cases in our dataset. 
 Dataset	Percentage of legitimate transactions	Percentage of fraudulent transactions
 E-commerce transaction	90.49%	9.5%
